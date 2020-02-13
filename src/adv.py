@@ -54,9 +54,8 @@ selection = ''
 
 while selection != 'q':
     print(f'Your location is {player.currentroom.roomname}. Description: {player.currentroom.description}.')
+    selection = input('Enter n, s, e or w to move to a room or q to quit: ')
     try:
-        selection = input('Enter n, s, e or w to move to a room or q to quit: ')
-
         if selection == "n":
             if player.currentroom.n_to != None:
                 player.currentroom = player.currentroom.n_to 
@@ -78,5 +77,5 @@ while selection != 'q':
                 player.currentroom = player.currentroom.e_to
             else:
                 print("No way here") 
-    except (ValueError, RuntimeError, TypeError, NameError):
+    except (ValueError, RuntimeError, TypeError, AttributeError):
         print('Oops!  That was no valid number.  Try again...')
