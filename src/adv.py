@@ -1,6 +1,6 @@
 from room import Room
 from player import Player
-
+import textwrap
 # Declare all the rooms
 
 room = {
@@ -41,7 +41,6 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 player = Player("Tolu", room['outside'])
 # Write a loop that:
-#
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
@@ -51,4 +50,33 @@ player = Player("Tolu", room['outside'])
 #
 # If the user enters "q", quit the game.
 
-print(player)
+selection = ''
+
+while selection != 'q':
+    print(f'Your location is {player.currentroom.roomname}. Description: {player.currentroom.description}.')
+    try:
+        selection = input('Enter n, s, e or w to move to a room or q to quit: ')
+
+        if selection == "n":
+            if player.currentroom.n_to != None:
+                player.currentroom = player.currentroom.n_to 
+            else:
+                print("No way here") 
+
+        elif selection == 's':
+            if player.currentroom.s_to != None:
+                player.currentroom = player.currentroom.s_to
+            else:
+                print("No way here") 
+        elif selection == 'w':
+            if player.currentroom.w_to != None:
+                player.currentroom = player.currentroom.w_to
+            else:
+                print("No way here") 
+        elif selection == 'e':
+            if player.currentroom.e_to != None:
+                player.currentroom = player.currentroom.e_to
+            else:
+                print("No way here") 
+    except (ValueError, RuntimeError, TypeError, NameError):
+        print('Oops!  That was no valid number.  Try again...')
