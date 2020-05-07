@@ -2,7 +2,11 @@
 # currently.
 from room import Room
 
+
 class Player:
     def __init__(self, name, currentroom):
         self.name = name
         self.currentroom = currentroom
+
+    def __str__(self):
+        return 'Player(name='+self.name+', currentroom='+str(self.currentroom) + ')'
