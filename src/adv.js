@@ -49,7 +49,7 @@ var selection = ''
 while (selection !== 'q') {
     console.log(`Your location is ${newPlayer.currentroom.roomname}. Description: ${newPlayer.currentroom.description}.`)
     selection = prompt("Enter n, s, e or w to move to a room or q to quit:")
-    if (selection === 'n'||'N') {
+    if (selection === 'n') {
         if (newPlayer.currentroom.n_to) {
             newPlayer.currentroom = newPlayer.currentroom.n_to
         }
