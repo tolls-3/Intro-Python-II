@@ -6,6 +6,6 @@ class Room:
     def __init__(self, roomname, description):
         self.roomname = roomname
         self.description = description
-
+        self.items = []
     def __str__(self):
-        return 'Room(roomname='+self.roomname+', description='+str(self.description) + ')'
+        return 'Room(roomname='+self.roomname+', description='+str(self.description) +')'

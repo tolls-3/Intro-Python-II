@@ -1,13 +1,12 @@
+const prompt = require('prompt-sync')({ sigint: true });
 // from room import Room
 const Room = require('./room')
 // Declare all the rooms
 const Player = require('./player')
 
-var room = {
-    'outside': new Room("Outside Cave Entrance",
-        "North of you, the cave mount beckons"),
-
-    'foyer': new Room("Foyer", "Dim light filters in from the south. Dusty passages run north and east."),
+const room = {
+    "outside": new Room("Outside Cave Entrance", "North of you, the cave mount beckons"),
+    "foyer": new Room("Foyer", "Dim light filters in from the south. Dusty passages run north and east."),
 
     'overlook': new Room("Grand Overlook", "A steep cliff appears before you, falling into the darkness.Ahead to the north, a light flickers in the distance, but there is no way across the chasm."),
 
@@ -34,7 +33,6 @@ room['treasure'].s_to = room['narrow']
 
 // Make a new player object that is currently in the 'outside' room.
 const newPlayer = new Player('Tolu', room['outside'])
-console.log(newPlayer)
 // Write a loop that:
 
 // # * Prints the current room name
@@ -46,23 +44,45 @@ console.log(newPlayer)
 // #
 // # If the user enters "q", quit the game.
 
-const readline = require("readline");
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-rl.question("Enter n, s, e or w to move to a room or q to quit:  ", (userInput) => {
-    navigate(userInput)
-    rl.close()
-})
-function navigate(selection) {
-    while (selection !== 'q') {
-        console.log(`Your location is ${newPlayer.currentroom.roomname}. Description: ${newPlayer.currentroom.description}.`)
-        if (selection === 'n' && newPlayer.currentroom.n_to !== null) {
+
+var selection = ''
+while (selection !== 'q') {
+    console.log(`Your location is ${newPlayer.currentroom.roomname}. Description: ${newPlayer.currentroom.description}.`)
+    selection = prompt("Enter n, s, e or w to move to a room or q to quit:")
+    if (selection === 'n'||'N') {
+        if (newPlayer.currentroom.n_to) {
             newPlayer.currentroom = newPlayer.currentroom.n_to
         }
         else {
-            console.log('no way')
+            console.log('No bridge yet')
         }
     }
+    else if (selection === 's') {
+        if (newPlayer.currentroom.s_to) {
+            newPlayer.currentroom = newPlayer.currentroom.s_to
+        }
+        else {
+            console.log('No bridge yet')
+        }
+    }
+    else if (selection === 'w') {
+        if (newPlayer.currentroom.w_to) {
+            newPlayer.currentroom = newPlayer.currentroom.w_to
+        }
+        else {
+            console.log('No bridge yet')
+        }
+    }
+    else if (selection === 'e') {
+        if (newPlayer.currentroom.e_to) {
+            newPlayer.currentroom = newPlayer.currentroom.e_to
+        }
+        else {
+            console.log('No bridge yet')
+        }
+    }
+    else {
+        console.log('Come back and play again')
+    }
+
 }

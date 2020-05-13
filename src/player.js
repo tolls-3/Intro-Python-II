@@ -2,8 +2,8 @@
 // # currently.
 
 class Player {
-    constructor(roomname, currentroom) {
-        this.roomname = roomname
+    constructor(name, currentroom) {
+        this.name = name
         this.currentroom = currentroom
     }
 }
