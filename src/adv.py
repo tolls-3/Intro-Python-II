@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 import textwrap
+from item import Item
 # Declare all the rooms
 
 room = {
@@ -22,6 +23,10 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# create items to room
+sword = Item("sword", "cut things down")
+gun = Item("gun", "dun things down")
+cloak = Item("cloak", "disappearing from things")
 
 # Link rooms together
 
@@ -34,13 +39,16 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# add items to rooms
+room['outside'].items = [sword]
+room['foyer'].items = [gun]
+room['narrow'].items = [cloak]
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player("Tolu", room['outside'])
-print(player)
 # Write a loop that:
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
@@ -51,32 +59,86 @@ print(player)
 #
 # If the user enters "q", quit the game.
 
+# We want to display items in the current room a player is in
+
+
+def display_items():
+    if len(player.currentroom.items) > 0:
+        for item in player.currentroom.items:
+            print(
+                f'Item in this room is- {item.name.capitalize()} : {item.description} \n')
+    else:
+        print('no item \n')
+
+# This allows player in a room with items to pick an item and add to inventory
+
+
+def on_take():
+    if len(player.currentroom.items) > 0:
+        for item in player.currentroom.items:
+            player.inventory.append(item)
+            player.currentroom.items.remove(item)
+            print(f'Your inventory is {[i for i in player.inventory]}')
+    else:
+        print('no item in this room to pick \n')
+
+# This displays all items in the players inventory as they move between rooms
+
+
+def display_items_inventory():
+    if len(player.inventory) > 0:
+        for item in player.inventory:
+            print(
+                f'inventory items are - {item.name.capitalize()} : {item.description} \n')
+    else:
+        print('no item \n')
+
+# drop items from an inventory back into a room
+
+
+def on_drop():
+    if len(player.inventory) > 0:
+        for item in player.inventory:
+            player.inventory.remove(item)
+            player.currentroom.items.append(item)
+    else:
+        print('no item in inventory to drop')
+
+
 selection = ''
 
 while selection != 'q':
-    print(f'Your location is {player.currentroom.roomname}. Description: {player.currentroom.description}.')
-    selection = input('Enter n, s, e or w to move to a room or q to quit: ')
+    print(
+        f'Your location is {player.currentroom.roomname}. Description: {player.currentroom.description}.')
+    display_items()
+    display_items_inventory()
+    selection = input(
+        'Enter n, s, e or w to move to another room or q to quit: \n Enter get to add item in the room to your inventory')
     try:
         if selection == "n":
             if player.currentroom.n_to != None:
-                player.currentroom = player.currentroom.n_to 
+                player.currentroom = player.currentroom.n_to
             else:
-                print("No way here") 
+                print("No way here \n")
 
         elif selection == 's':
             if player.currentroom.s_to != None:
                 player.currentroom = player.currentroom.s_to
             else:
-                print("No way here") 
+                print("No way here \n")
         elif selection == 'w':
             if player.currentroom.w_to != None:
                 player.currentroom = player.currentroom.w_to
             else:
-                print("No way here") 
+                print("No way here \n")
         elif selection == 'e':
             if player.currentroom.e_to != None:
                 player.currentroom = player.currentroom.e_to
             else:
-                print("No way here") 
+                print("No way here \n")
+        elif selection == 'get':
+            on_take()
+        elif selection == 'drop':
+            on_drop()
     except (ValueError, RuntimeError, TypeError, AttributeError):
-        print('Oops!  That was no valid number.  Try again...')
+        print('Oops!  That was no valid number.  Try again...\n')

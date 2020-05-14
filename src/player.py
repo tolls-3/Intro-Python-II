@@ -10,4 +10,9 @@ class Player:
         self.inventory = []
 
     def __str__(self):
-        return 'Player(name='+self.name+', currentroom='+str(self.currentroom) + ')'
+        # return 'Player(name='+self.name+', currentroom='+str(self.currentroom) + ')'
+        output = ''
+        output += self.name + '' + self.currentroom + '\n'
+        for index, inventory in enumerate(self.inventory):
+            output += str(inventory) + '\n'
+        return output
