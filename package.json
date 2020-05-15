@@ -1,0 +1,26 @@
+{
+  "name": "Intro-Python-II",
+  "version": "1.0.0",
+  "description": "Up to this point, you've gotten your feet wet by working on a bunch of small Python programs. In this module, we're going to continue to solidify your Python chops by implementing a full-featured project according to a provided specification.",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tolls-3/Intro-Python-II.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tolls-3/Intro-Python-II/issues"
+  },
+  "homepage": "https://github.com/tolls-3/Intro-Python-II#readme",
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
+}
